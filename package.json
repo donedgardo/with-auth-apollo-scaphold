@@ -1,0 +1,24 @@
+{
+  "name": "connect-iq",
+  "version": "1.0.0",
+  "description": "Administrative area of connect-iq",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js"
+  },
+  "author": "edgardo@skyrocketdev.com",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "graphql": "^0.10.3",
+    "isomorphic-fetch": "^2.2.1",
+    "next": "^2.4.5",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-apollo": "^1.4.2",
+    "react-cookie": "^2.0.7",
+    "react-dom": "^15.6.1",
+    "redux": "^3.7.1"
+  }
+}
