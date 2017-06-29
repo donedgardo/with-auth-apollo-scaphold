@@ -1,14 +1,25 @@
+import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo'
 import { Cookies } from 'react-cookie';
 
 import Login from './Login';
 
-const LoginContainer  = ({ loginUser }) => {
-  async function handleLogin (e) {
-    e.preventDefault();
-    const cookies = new Cookies();
-    console.log(sup);
+class LoginContainer extends Component {
 
+  constructor(props, context){
+    super(props);
+    this.state = {
+      loading: false
+    }
+    this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  async handleLogin(e){
+    e.preventDefault();
+    const { loginUser } = this.props;
+    const cookies = new Cookies();
+
+    console.log('happening');
     let username = e.target.elements.username.value;
     let password = e.target.elements.password.value;
 
@@ -18,21 +29,25 @@ const LoginContainer  = ({ loginUser }) => {
       return false
     }
 
-    // prepend http if missing from url
-    // try {
-    //   const { data, errors } = await loginUser(username, password);
-    //   if(!errors){
-    //     const token = data.loginUser && data.loginUser.token;
-    //     cookies.set('user-token', token);
-    //   }
-    // } catch(e){
-    //   console.error(e);
-    // }
+    try {
+      this.setState({loading : true});
+      const { data, errors } = await loginUser(username, password);
+      if(!errors) {
+        const token = data.loginUser && data.loginUser.token;
+        cookies.set('user-token', token);
+        this.setState({loading : false});
+      }
+    } catch(e) {
+      this.setState({loading : false});
+      console.error(e);
+    }
   }
-
-  return (
-    <Login handleLogin={handleLogin} />
-  )
+  render() {
+    const { loading } = this.state;
+    return (
+      <Login handleLogin={this.handleLogin} loading={loading} />
+    )
+  }
 }
 
 const loginUser = gql`
@@ -49,4 +64,4 @@ export default graphql(loginUser, {
       variables: { input: { username, password }},
     })
   })
-})(Login)
+})(LoginContainer)
