@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo'
 import { Cookies } from 'react-cookie';
@@ -57,6 +58,10 @@ mutation Login($input:LoginUserInput!){
   }
 }
 `
+
+LoginContainer.propTypes = {
+  loginUser: PropTypes.func.isRequired
+}
 
 export default graphql(loginUser, {
   props: ({ mutate }) => ({

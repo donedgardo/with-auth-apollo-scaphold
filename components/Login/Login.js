@@ -1,3 +1,5 @@
+import { PropTypes } from 'prop-types';
+
 const Login  = ({ handleLogin, loading }) => {
   return (
     <form onSubmit={handleLogin}>
@@ -10,6 +12,15 @@ const Login  = ({ handleLogin, loading }) => {
       `}</style>
     </form>
   )
+}
+
+Login.defaultProps = {
+  loading: false
+};
+
+Login.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 }
 
 export default Login
