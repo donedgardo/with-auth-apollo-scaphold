@@ -10,6 +10,7 @@
   "author": "edgardo@skyrocketdev.com",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.3",
     "express": "^4.15.3",
     "graphql": "^0.10.3",
     "isomorphic-fetch": "^2.2.1",
