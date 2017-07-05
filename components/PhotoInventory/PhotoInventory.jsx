@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import react-dropzone from 'react-dropzone';
+import Dropzone from 'react-dropzone';
 
 const PhotoInventory = ({onDrop, files}) => (
   <div className="">
@@ -18,3 +18,5 @@ const PhotoInventory = ({onDrop, files}) => (
     </aside>
   </div>
 )
+
+export default PhotoInventory;
