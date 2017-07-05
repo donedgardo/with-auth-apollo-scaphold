@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
-import { Cookies } from 'react-cookie';
+import Router from 'next/router'
 
 import prettyError from '../../lib/prettyfyGraphqlError';
 import Login from './Login';
@@ -50,6 +50,7 @@ class LoginContainer extends Component {
         const token = data.loginUser && data.loginUser.token;
         cookies.set('user-token', token);
         this.setState({ loading: false });
+        Router.replace('/');
       }
     } catch (error) {
       if (error.message) {

@@ -10,15 +10,15 @@
   "author": "edgardo@skyrocketdev.com",
   "license": "ISC",
   "dependencies": {
-    "cookie-parser": "^1.4.3",
+    "cookie": "^0.3.1",
     "express": "^4.15.3",
     "graphql": "^0.10.3",
+    "graphql-tag": "^2.4.2",
     "isomorphic-fetch": "^2.2.1",
     "next": "^2.4.5",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-apollo": "^1.4.2",
-    "react-cookie": "^2.0.7",
     "react-dom": "^15.6.1",
     "redux": "^3.7.1"
   },
