@@ -4,20 +4,27 @@ import react-dropzone from 'react-dropzone';
 
 import PhotoInventory from './PhotoInventory.jsx';
 
-export default class PhotoInventoryContainer extends Component {
+class PhotoInventoryContainer extends Component {
   constructor(props){
     super(props)
     this.state = { files: [] }
   }
 
   parseSku(fileName){
-    createOrFindInventory(sku){
-      
+    const sku = filename.split() //Get sku from filename
+    found = findInventory(sku); // Verify inventory
+
+    if (found) {
+      imageInventory(sku, image)
+    } else {
+      unmatchedInventory(sku, image);
     }
   }
 
   onDrop(acceptedFiles, rejectedFiles) {
     // do stuff with files...
+
+    acceptedFiles.forEach( file => parseSku())
   }
 
   onDropAccepted() {
@@ -35,4 +42,8 @@ export default class PhotoInventoryContainer extends Component {
       <PhotoInventory onDrop={this.onDrop} onDropAccepted={this.onDropAccepted} onDropRejected={this.onDropRejected} />
     )
   }
+}
+
+export default class PhotoInventoryContainerWithData = {
+
 }
