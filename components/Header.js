@@ -1,10 +1,21 @@
-import Link from 'next/link'
+import React from 'react';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
 
-export default ({ pathname }) => (
-  <header>
-    <Link prefetch href='/'>
-      <a className={pathname === '/' && 'is-active'}>Home</a>
-    </Link>
+import { gql, graphql } from 'react-apollo';
+
+import CurrentUser from '../components/currentUser';
+
+const HeaderContainer = ({ pathname, data }) => {
+  return (
+    <header>
+      <Link prefetch href='/'>
+        <a className={pathname === '/' && 'is-active'}>Home</a>
+      </Link>
+      <Link prefetch href="/login">
+        <a className={pathname === '/login' && 'is-active'}>Login</a>
+      </Link>
+      <CurrentUser />
 
     <style jsx>{`
       header {
@@ -18,6 +29,13 @@ export default ({ pathname }) => (
       .is-active {
         text-decoration: underline;
       }
-    `}</style>
-  </header>
-)
+      `}</style>
+    </header>
+  );
+};
+
+HeaderContainer.propTypes = {
+  pathname: PropTypes.string.isRequired,
+};
+
+export default HeaderContainer;
