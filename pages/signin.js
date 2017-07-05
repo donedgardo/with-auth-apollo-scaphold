@@ -49,9 +49,12 @@ class Signin extends React.Component {
         document.cookie = cookie.serialize('user-token', token, {
           maxAge: 30 * 24 * 60 * 60, // 30 days
         });
+        console.log(this.props.client);
         this.props.client.resetStore().then(() => {
           // Now redirect to the homepage
-          redirect({}, '/');
+          setTimeout(() => {
+            redirect({}, '/');
+          }, 200);
         });
       }
     } catch (error) {
