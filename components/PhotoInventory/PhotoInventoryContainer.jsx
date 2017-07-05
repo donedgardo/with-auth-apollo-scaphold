@@ -10,6 +10,18 @@ class PhotoInventoryContainer extends Component {
     this.state = { files: [] }
   }
 
+  componentDidMount() {
+
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    
+  }
+
   parseSku(fileName){
     const sku = filename.split() //Get sku from filename
     found = findInventory(sku); // Verify inventory
