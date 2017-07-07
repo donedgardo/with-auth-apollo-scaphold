@@ -10,9 +10,9 @@ import checkLoggedIn from '../lib/check-logged-in';
 
 class Signin extends React.Component {
   static async getInitialProps(context, apolloClient) {
-    const { username } = await checkLoggedIn(context, apolloClient);
+    const data = await checkLoggedIn(context, apolloClient);
 
-    if (username) {
+    if (data) {
       // Already signed in? No need to continue.
       // Throw them back to the main page
       redirect(context, '/');
@@ -35,22 +35,28 @@ class Signin extends React.Component {
   }
 
   async signIn(event) {
-    /* global FormData */
-    const form = new FormData(event.target);
     event.preventDefault();
     event.stopPropagation();
+    /* global FormData */
+    console.log('Clicked logged in');
+    const form = new FormData(event.target);
     try {
       this.setState({ loading: true })
+      console.log('Getting sign data');
       const { data, errors } = await this.props.signin(form.get('username'), form.get('password'));
       if (!errors) {
+        console.log('No errors in login');
         const token = data.loginUser && data.loginUser.token;
+        console.log('Setting token in cookie ', token);
         // Store the token in cookie
         // eslint-disable-next-line
         document.cookie = cookie.serialize('user-token', token, {
           maxAge: 30 * 24 * 60 * 60, // 30 days
         });
+        console.log('cookie set');
         this.props.client.resetStore().then(() => {
           // Now redirect to the homepage
+          console.log('client reset');
           redirect({}, '/');
         });
       }
