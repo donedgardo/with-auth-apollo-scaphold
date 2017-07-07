@@ -5,20 +5,25 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
   },
   "author": "edgardo@skyrocketdev.com",
   "license": "ISC",
   "dependencies": {
     "cookie": "^0.3.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.15.3",
     "graphql": "^0.10.3",
     "graphql-tag": "^2.4.2",
     "isomorphic-fetch": "^2.2.1",
     "next": "^2.4.5",
+    "now-logs": "0.0.7",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-apollo": "^1.4.2",
+    "react-cookie": "^2.0.8",
     "react-dom": "^15.6.1",
     "react-dropzone": "^3.13.3",
     "react-redux": "^5.0.5",

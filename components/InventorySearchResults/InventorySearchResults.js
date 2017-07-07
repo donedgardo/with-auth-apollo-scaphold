@@ -1,10 +1,12 @@
 import React from 'react';
 
 const InventorySearchResults = ({ inventory }) => {
-  // return inventory.map(i =>
-  //   (<div>{ i.description }</div>),
-  // );
-  return (<p>{inventory.length}</p>)
-};
+  return (
+    <div>
+      <h2>Inventory</h2>
+      {inventory.map(i => <p key={i.id}>{i.description}</p>)}
+    </div>
+  );
+}
 
 export default InventorySearchResults;

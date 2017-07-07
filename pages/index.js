@@ -9,6 +9,7 @@ import checkLoggedIn from '../lib/check-logged-in';
 import SearchBar from '../components/SearchBar';
 import SignoutButton from '../components/SignoutButton';
 import InventorySearchResults from '../components/InventorySearchResults';
+import LocationSearchResults from '../components/LocationSearchResults';
 
 class Index extends React.Component {
   static async getInitialProps(context, apolloClient) {
@@ -20,14 +21,14 @@ class Index extends React.Component {
     return { username };
   }
   render() {
-    const { username } = this.props;
+    const { username, client } = this.props;
     return (
       <div>
         Hello {username}!
         <SearchBar />
-        <SignoutButton resetStore={this.props.client.resetStore} />
+        <SignoutButton resetStore={client.resetStore.bind(this)} />
         <InventorySearchResults />
-        {/* <LocationSearchResult  /> */}
+        <LocationSearchResults />
       </div>
     );
   }

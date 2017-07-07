@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { gql, graphql, compose, withApollo } from 'react-apollo';
 
-import InventorySearchResults from './InventorySearchResults';
+import LocationSearchResults from './LocationSearchResults';
 import debounce from '../../lib/debounce';
 
-class InventorySearchResultsContainer extends React.Component {
+class LocationSearchResultsContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.search = this.search.bind(this);
@@ -27,19 +27,19 @@ class InventorySearchResultsContainer extends React.Component {
     });
   }
   render() {
-    const { inventory, nHits, loading } = this.props;
+    const { locations, nHits, loading } = this.props;
     if (loading) {
       return <p>loading</p>;
     }
     return (
-      <InventorySearchResults inventory={inventory} hits={nHits} />
+      <LocationSearchResults locations={locations} hits={nHits} />
     );
   }
 }
 
-InventorySearchResultsContainer.propTypes = {
+LocationSearchResultsContainer.propTypes = {
   // eslint-disable-next-line
-  inventory: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
   // eslint-disable-next-line
   client: PropTypes.object.isRequired,
   nHits: PropTypes.number.isRequired,
@@ -55,14 +55,14 @@ const mapStateToProps = state =>
   });
 const withReduxData = connect(mapStateToProps);
 
-const algoliaSearchInventory = gql`
-query InventorySearch($query:String!){
+const algoliaSearchLocations = gql`
+query LocationsSearch($query:String!){
   viewer {
-    searchAlgoliaInventories(query:$query){
+    searchAlgoliaLocations(query:$query){
       nbHits
       hits {
         node{
-          description
+          name
           id
         }
       }
@@ -70,7 +70,7 @@ query InventorySearch($query:String!){
   }
 }
 `;
-const withSearch = graphql(algoliaSearchInventory, {
+const withSearch = graphql(algoliaSearchLocations, {
   props: ({
     data: {
       viewer,
@@ -78,12 +78,12 @@ const withSearch = graphql(algoliaSearchInventory, {
       refetch,
     },
   }) => {
-    if (viewer && viewer.searchAlgoliaInventories && viewer.searchAlgoliaInventories) {
+    if (viewer && viewer.searchAlgoliaLocations && viewer.searchAlgoliaLocations) {
       return {
-        nHits: viewer.searchAlgoliaInventories.nbHits,
-        inventory: (
-          viewer.searchAlgoliaInventories.hits.length > 0 ?
-          viewer.searchAlgoliaInventories.hits.map(i => (i.node)) : []
+        nHits: viewer.searchAlgoliaLocations.nbHits,
+        locations: (
+          viewer.searchAlgoliaLocations.hits.length > 0 ?
+          viewer.searchAlgoliaLocations.hits.map(i => (i.node)) : []
          ),
         loading,
         refetch,
@@ -91,7 +91,7 @@ const withSearch = graphql(algoliaSearchInventory, {
     }
     return {
       nHits: 0,
-      inventory: [],
+      locations: [],
       loading,
       refetch: () => null,
     };
@@ -109,4 +109,4 @@ export default compose(
   withApollo,
   withReduxData,
   withSearch,
-)(InventorySearchResultsContainer);
+)(LocationSearchResultsContainer);
