@@ -1,11 +1,48 @@
-import App from '../components/App'
-import Header from '../components/Header'
-import Login from '../components/Login'
-import withData from '../lib/withData'
+import React from 'react';
+import { withApollo, compose } from 'react-apollo';
+import PropTypes from 'prop-types';
 
-export default withData((props) => (
-  <App>
-    <Header pathname={props.url.pathname} />
-    <Login />
-  </App>
-))
+import withData from '../lib/withData';
+import redirect from '../lib/redirect';
+import checkLoggedIn from '../lib/check-logged-in';
+
+import SearchBar from '../components/SearchBar';
+import SignoutButton from '../components/SignoutButton';
+import InventorySearchResults from '../components/InventorySearchResults';
+import LocationSearchResults from '../components/LocationSearchResults';
+
+class Index extends React.Component {
+  static async getInitialProps(context, apolloClient) {
+    const { username } = await checkLoggedIn(context, apolloClient);
+    if (!username) {
+      // If not signed in, send them somewhere more useful
+      redirect(context, '/signin');
+    }
+    return { username };
+  }
+  render() {
+    const { username, client } = this.props;
+    return (
+      <div>
+        Hello {username}!
+        <SearchBar />
+        <SignoutButton resetStore={client.resetStore.bind(this)} />
+        <InventorySearchResults />
+        <LocationSearchResults />
+      </div>
+    );
+  }
+}
+
+Index.propTypes = {
+  username: PropTypes.string.isRequired,
+  // eslint-disable-next-line
+  client: PropTypes.object.isRequired,
+};
+
+export default compose(
+  // withData gives us server-side graphql queries before rendering
+  withData,
+  // withApollo exposes `this.props.client` used when logging out
+  withApollo,
+)(Index);
